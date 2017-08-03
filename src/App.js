@@ -18,16 +18,37 @@ class App extends Component {
 		};
 	}
 
+
 fillGuesses = () => {
-  for(var i = 1; i <= this.state.wordToGuess.length; i++) {
-    this.state.correctGuesses.push('_');
+  if(this.state.correctGuesses.length < 1) {
+    for(var i = 1; i <= this.state.wordToGuess.length; i++) {
+      this.state.correctGuesses.push('_');
+    }
   }
+}
+
+guessLetter = (e) => {
+  e.preventDefault();
+  if(e.target.value.length < 2) {
+    this.setState({
+      guess: e.target.value
+    });
+  }
+}
+
+buttonClick = () => {
+  const word = this.state.wordToGuess;
+  var temp = this.word.filter((letterPos) => {
+    return letterPos.indexOf(this.state.wordToGuess);
+  });
+  console.log(temp);
 }
 
   render() {
     // const newWord = randomWords();
-    console.log(this.state.wordToGuess);
     this.fillGuesses();
+    console.log(this.state.wordToGuess);
+    console.log(this.state.guess);
     console.log(this.state.correctGuesses);
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
@@ -36,10 +57,10 @@ fillGuesses = () => {
 				<div  className="hangman-sprites">
 					<div className={`${className} current`} />
 				</div>
-				<div id="inputs">
+				<div id="inputs" onChange={this.guessLetter}>
 					<div>{spans}</div>
 					<input />
-					<button>Guess</button>
+					<button onClick={this.buttonClick}>Guess</button>
 				</div>
 			</div>
     );

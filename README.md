@@ -6,9 +6,9 @@ Fork, Clone, yarn install, yarn start
 * xGoogle this this package to learn how to use it
 * xUse random-words to initialize the state wordToGuess with a random word
 * xFill the correctGuesses array with "_" for however many letters the wordToGuess has
-* Add a change listener to the textbox
-* Assign value of textbox to state property guess
-* Make sure only one letter is allowed to be typed in
+* xAdd a change listener to the textbox
+* xAssign value of textbox to state property guess
+* xMake sure only one letter is allowed to be typed in
 * Add a click listener to the button
   * Determine if the guess is in the wordToGuess
   * Increment the strike value if the guess is not in the wordToGuess and setState
