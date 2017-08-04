@@ -23,6 +23,7 @@ class App extends Component {
     if(this.state.correctGuesses.length < 1) {
       for(var i = 1; i <= this.state.wordToGuess.length; i++) {
         this.state.correctGuesses.push('_');
+        // note: I can't believe it's letting me push to state!!
       }
     }
   }
@@ -39,9 +40,11 @@ class App extends Component {
   buttonClick = () => {
     // set word to the word we're guessing and console the word for cheating
     const word = this.state.wordToGuess;
-    console.log(this.state.wordToGuess);
+    console.log(word);
+
     // idxs is temp array to hold INDEXES of word letter match of user guess
     const idxs = [];
+
     //push word letter match into idxs array
     for(var i = 0; i < word.length; i++) {
       if(word[i] === this.state.guess) {
@@ -54,8 +57,6 @@ class App extends Component {
     this.setState({
       guess:""
     })
-
-
 
   };
 
@@ -73,12 +74,14 @@ class App extends Component {
         correctGuesses: tempCG
       })
     } else {
-      // if letter not found, add one to strike
-      this.setState((prevState) => {
-        return{
-          strikes: prevState.strikes + 1
-        }
-      })
+      // if letter not found, add one to strike, only if guesser guessed
+      if (this.state.guess.length > 0) {
+        this.setState((prevState) => {
+          return{
+            strikes: prevState.strikes + 1
+          }
+        })
+      }
     }
 
   };
@@ -89,14 +92,15 @@ class App extends Component {
 
     console.log(this.state.correctGuesses);
 
-	  let className="";
+    // check for win or lose
+    let className="";
     if ( this.state.correctGuesses.indexOf('_') > -1 ) {
       className= `strike-${this.state.strikes}`;
       if (this.state.strikes >= 6) className= 'gameover';
-    }
-      else className= 'gamewon';
+    } else className= 'gamewon';
 
-
+    // map the spans (which are letters in the word) and
+    // populated if the guesser guesses correctly
 		let spans = this.state.correctGuesses.map((g) => {
       return  [<span>{g}  </span>];
 
@@ -109,7 +113,11 @@ class App extends Component {
 				</div>
 				<div id="inputs" onChange={this.guessLetter}>
 					<div>{spans}</div>
-					<input placeholder="guess here" value={this.state.guess}/>
+					<input  placeholder="guess here"
+                  value={this.state.guess}
+                  ref={(input) => { this.textInput = input; }}
+                  autoFocus
+          />
 					<button onClick={this.buttonClick}>Guess</button>
 				</div>
 			</div>
