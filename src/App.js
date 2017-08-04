@@ -18,7 +18,7 @@ class App extends Component {
 		};
 	}
 
-
+  // fills correctGuesses with _'s
   fillGuesses = () => {
     if(this.state.correctGuesses.length < 1) {
       for(var i = 1; i <= this.state.wordToGuess.length; i++) {
@@ -28,6 +28,7 @@ class App extends Component {
     }
   }
 
+  // sets this.state.guess to user guess
   guessLetter = (e) => {
     e.preventDefault();
     if(e.target.value.length < 2) {
@@ -51,9 +52,11 @@ class App extends Component {
         idxs.push(i);
       }
     }
+
     // call function showHit which changes the '_' with user guess in correctGuesses
     this.showHit(idxs);
 
+    // sets this.state back to null
     this.setState({
       guess:""
     })
@@ -124,5 +127,8 @@ class App extends Component {
     );
   }
 }
+
+// note: would like to fix focus issue
+// note: would like to show letters guessed but were wrong
 
 export default App;
