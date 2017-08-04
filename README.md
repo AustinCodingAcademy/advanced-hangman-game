@@ -9,10 +9,10 @@ Fork, Clone, yarn install, yarn start
 * xAdd a change listener to the textbox
 * xAssign value of textbox to state property guess
 * xMake sure only one letter is allowed to be typed in
-* Add a click listener to the button
-  * Determine if the guess is in the wordToGuess
+* xAdd a click listener to the button
+  * xDetermine if the guess is in the wordToGuess
   * Increment the strike value if the guess is not in the wordToGuess and setState
-  * If the guess is in the wordToGuess then add the letter to the correctGuesses array in the correct index and setState
+  * xIf the guess is in the wordToGuess then add the letter to the correctGuesses array in the correct index and setState
   * set state guess back to ""
 * In the render method, check if there are any "_" in the correctGuesses array, if not then the game is won, change the className variable to "gamewon"
 * if there are 6 strikes then the game is lost, change the className variable to "gameover"

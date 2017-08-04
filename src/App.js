@@ -66,11 +66,18 @@ class App extends Component {
       this.setState({
         correctGuesses: tempCG
       })
+    } else {
+      console.log('here');
+      this.setState((prevState) => {
+        strikes: prevState + 1
+      })
     }
   };
 
   render() {
     this.fillGuesses();
+    console.log(this.state.strikes)
+
     console.log(this.state.correctGuesses);
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
