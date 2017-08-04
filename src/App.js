@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import state from "./state";
+// import state from "./state";
 // import randomWords from 'random-words';
 
 var randomWords = require('random-words');
@@ -37,33 +37,40 @@ class App extends Component {
   }
 
   buttonClick = () => {
+    // set word to the word we're guessing
     const word = this.state.wordToGuess;
     console.log(this.state.wordToGuess);
-
+    // idxs is temp array to hold INDEXES of word letter match of user guess
+    const idxs = [];
+    //push word letter match into idxs array
     for(var i = 0; i < word.length; i++) {
       if(word[i] === this.state.guess) {
-        this.showHit(i)
+        idxs.push(i);
       }
+    }
+    // call function showHit which changes the '_' with user guess in correctGuesses
+    this.showHit(idxs)
+
+  };
+
+  // changes the '_' with user guess in correctGuesses
+  showHit = (idxs) => {
+    if(idxs.length >= 1) {
+      // temp variable so we don't effect original array of correctGuesses
+      var tempCG = this.state.correctGuesses.slice(0);
+      // replace each index in correctGuesses with user guess
+      for(var i = 0; i < idxs.length; i++) {
+        tempCG.splice(idxs[i], 1, this.state.guess);
+      }
+      // set State of correctGuesses with new temp array
+      this.setState({
+        correctGuesses: tempCG
+      })
     }
   };
 
-  showHit = (i) => {
-    // console.log(i);
-    var tempCG = this.state.correctGuesses.slice(0);
-
-    tempCG.splice(i, 1, 'x');
-    this.setState({
-      correctGuesses: tempCG
-    })
-
-console.log(this.state.correctGuesses);
-   };
-
   render() {
-    // const newWord = randomWords();
     this.fillGuesses();
-    // console.log(this.state.wordToGuess);
-    // console.log(`guess: this.state.guess`);
     console.log(this.state.correctGuesses);
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
