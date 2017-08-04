@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   buttonClick = () => {
-    // set word to the word we're guessing
+    // set word to the word we're guessing and console the word for cheating
     const word = this.state.wordToGuess;
     console.log(this.state.wordToGuess);
     // idxs is temp array to hold INDEXES of word letter match of user guess
@@ -49,7 +49,13 @@ class App extends Component {
       }
     }
     // call function showHit which changes the '_' with user guess in correctGuesses
-    this.showHit(idxs)
+    this.showHit(idxs);
+
+    this.setState({
+      guess:""
+    })
+
+
 
   };
 
@@ -67,11 +73,14 @@ class App extends Component {
         correctGuesses: tempCG
       })
     } else {
-      console.log('here');
+      // if letter not found, add one to strike
       this.setState((prevState) => {
-        strikes: prevState + 1
+        return{
+          strikes: prevState.strikes + 1
+        }
       })
     }
+
   };
 
   render() {
@@ -79,8 +88,20 @@ class App extends Component {
     console.log(this.state.strikes)
 
     console.log(this.state.correctGuesses);
-		let className = `strike-${this.state.strikes}`;
-		let spans = [<span>_</span>];
+
+	  let className="";
+    if ( this.state.correctGuesses.indexOf('_') > -1 ) {
+      className= `strike-${this.state.strikes}`;
+      if (this.state.strikes >= 6) className= 'gameover';
+    }
+      else className= 'gamewon';
+
+
+		let spans = this.state.correctGuesses.map((g) => {
+      return  [<span>{g}  </span>];
+
+    })
+
     return (
 			<div>
 				<div  className="hangman-sprites">
@@ -88,7 +109,7 @@ class App extends Component {
 				</div>
 				<div id="inputs" onChange={this.guessLetter}>
 					<div>{spans}</div>
-					<input />
+					<input placeholder="guess here" value={this.state.guess}/>
 					<button onClick={this.buttonClick}>Guess</button>
 				</div>
 			</div>

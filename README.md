@@ -11,9 +11,9 @@ Fork, Clone, yarn install, yarn start
 * xMake sure only one letter is allowed to be typed in
 * xAdd a click listener to the button
   * xDetermine if the guess is in the wordToGuess
-  * Increment the strike value if the guess is not in the wordToGuess and setState
+  * xIncrement the strike value if the guess is not in the wordToGuess and setState
   * xIf the guess is in the wordToGuess then add the letter to the correctGuesses array in the correct index and setState
-  * set state guess back to ""
+  * xset state guess back to ""
 * In the render method, check if there are any "_" in the correctGuesses array, if not then the game is won, change the className variable to "gamewon"
 * if there are 6 strikes then the game is lost, change the className variable to "gameover"
 * Map the correctGuesses array to create spans for each entry
