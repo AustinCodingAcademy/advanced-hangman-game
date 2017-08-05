@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import state from "./state";
 const randomWords = require('random-words');
 
 class App extends Component {
@@ -8,32 +7,40 @@ class App extends Component {
 		super();
 		this.state = {
 			wordToGuess: "",
-			strikes:0,
-			guess:"",
-			correctGuesses:[]
+			strikes: 0,
+			guess: "",
+			correctGuesses: []
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 	}
 	// app methods
+	updateArray(arr){
+		let retArr = this.state.wordToGuess.map((letter, idx) => {
+			if (this.state.guess === letter) return this.state.guess;
+			return this.state.correctGuesses[idx];
+		});
+		return retArr;
+	}
 	handleChange(e) {
-		const guess = e.target.value
-		console.log(guess);		
+		const guess = e.target.value;
 		this.setState({
 			guess: guess
 		});
 	}
 	handleClick(){
 		const guess = this.state.guess.toLowerCase();
-		const empty = Array(wortToGuess.length).fill("_");
-		const 
 		if (/[a-z]/.test(guess) && this.state.wordToGuess.indexOf(guess) > -1) {
-			console.log("found it!", guess);
+			const guesses = this.updateArray(this.state.correctGuesses);
+			this.setState({correctGuesses: guesses});
+		} else {
+			const strike = this.state.strikes + 1;
+			this.setState({strikes: strike});
 		}
 	}
 	// react methods
 	componentDidMount(){
-		const wordToGuess = randomWords();
+		const wordToGuess = randomWords().split('');
 		const correctGuesses = Array(wordToGuess.length).fill("_");
 		this.setState({
 			wordToGuess: wordToGuess,
@@ -42,9 +49,11 @@ class App extends Component {
 	}
 	// render
   render() {
-		console.log(this.state.wordToGuess, this.state.correctGuesses, this.state.guess);
+		console.log(this.state.wordToGuess);
 		let className = `strike-${this.state.strikes}`;
-		let spans = <span>_</span>;
+		if (this.state.strikes === 6) className = "gameover";
+		if (this.state.correctGuesses.indexOf("_") < 0) className = "gamewon";		
+		let spans = this.state.correctGuesses.map(x => <span>{x}</span>);
     return (
 			<div>
 				<div  className="hangman-sprites">
