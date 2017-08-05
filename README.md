@@ -3,7 +3,7 @@ Fork, Clone, yarn install, yarn start
 
 ### Do
 * yarn add the package "random-words"
-* Google this this package to learn how to use it
+* Google this package to learn how to use it
 * Use random-words to initialize the state wordToGuess with a random word
 * Fill the correctGuesses array with "_" for however many letters the wordToGuess has
 * Add a change listener to the textbox
