@@ -7,29 +7,44 @@ import randomWords from "random-words";
 class App extends Component {
 	constructor(){
 		super();
+
+		const wordToGuess = randomWords(); //generate random words
+		const correctGuesses = wordToGuess.split('').fill("_");
+
 		this.state = {
-			wordToGuess:"",
+			wordToGuess,
+			correctGuesses,
 			strikes:0,
-			guess:"",
-			correctGuesses:[]
+			guess:""
 		};
-		this.handleInput = this.handleInput.bind(this);
+		// this.handleInput = this.handleInput.bind(this);
+		// this.handleButtonClick = this.handleButtonClick.bind(this);
 	}
 
-	handleInput(e) {
-		if(e.target.value <= 1)
-		this.setState({
-			guess: e.target.value,
-		});
-	}
+
+	// handleInput(e) {
+	// 	if(e.target.value <= 1)
+	// 	this.setState({
+	// 		guess: e.target.value,
+	// 	});
+	// }
+
+	// handleButtonClick() {
+	// 	if(!this.state.wordToGuess.includes(this.state.guess)) {
+	// 		this.setState(prevState => {
+	// 			return {
+	// 				strikes: prevState.strikes + 1
+	// 			}
+	// 		});
+	// 	}
+	// }
 
   render() {
-		console.log(this.state.guess);
-		this.state.wordToGuess = randomWords();
-		console.log(this.state.wordToGuess);
+		// console.log(this.state.strikes);
+		// console.log(this.state.guess);
 
-		this.state.correctGuesses = Array(this.state.wordToGuess.length).fill("_")
-		console.log(this.state.correctGuesses);
+		console.log(this.state.wordToGuess); //print the word
+		console.log(this.state.correctGuesses); //print the "_" array
 
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
@@ -40,7 +55,7 @@ class App extends Component {
 				</div>
 				<div id="inputs">
 					<div>{spans}</div>
-					<input onChange={this.handleInput} />
+					<input />
 					<button>Guess</button>
 				</div>
 			</div>
