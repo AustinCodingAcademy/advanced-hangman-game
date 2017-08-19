@@ -9,7 +9,8 @@ class App extends Component {
 		super();
 
 		const wordToGuess = randomWords(); //generate random words
-		const correctGuesses = wordToGuess.split('').fill("_"); //fill the array with "_"
+		const wordToGuessArray = wordToGuess.split('');
+		const correctGuesses = wordToGuessArray.fill("_"); //fill the array with "_"
 
 		this.state = {
 			wordToGuess,
@@ -18,7 +19,7 @@ class App extends Component {
 			guess:""
 		};
 		this.handleInput = this.handleInput.bind(this);
-		// this.handleButtonClick = this.handleButtonClick.bind(this);
+		this.handleButtonClick = this.handleButtonClick.bind(this);
 	}
 
 
@@ -27,24 +28,44 @@ class App extends Component {
 			this.setState({
 				guess: e.target.value,
 			});
+		} else {
+			this.setState({
+				guess: ''
+			});
 		}
 	}
 
-	// handleButtonClick() {
-	// 	if(!this.state.wordToGuess.includes(this.state.guess)) {
-	// 		this.setState(prevState => {
-	// 			return {
-	// 				strikes: prevState.strikes + 1
-	// 			}
-	// 		});
-	// 	}
-	// }
+	handleButtonClick() {
+		let wordToGuess = this.state.wordToGuess;
+		let correctGuesses = this.state.correctGuesses;
+		let guess = this.state.guess;
 
-  render() {
-		// console.log(this.state.strikes);
-		console.log(this.state.wordToGuess); //print the word
-		console.log(this.state.correctGuesses); //print the "_" array
-		console.log(this.state.guess);
+		if(wordToGuess.includes(guess)) {
+ 			wordToGuess.split('').map((letter, index) => {
+				if(guess === letter) {
+					console.log(`Good!The letter "${guess}" is in the word`);
+				  correctGuesses[index] = guess;
+					console.log(`guess typed: ${guess}`);
+				}
+				this.setState({
+						correctGuesses: correctGuesses
+					});
+			});
+		} else {
+			console.log(`Ops! The letter "${guess}" is NOT in the word`);
+			this.setState(function(prevState) {
+				return {
+					strikes: prevState.strikes + 1
+				}
+			});
+		}
+	}
+
+	render() {
+		console.log(`The word to guess: ${this.state.wordToGuess}`);
+		console.log(`Your strikes: ${this.state.strikes}`);
+		console.log(`Your current guess array: ${this.state.correctGuesses}`);
+		console.log(`new guess value: ${this.state.guess}`);
 
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
@@ -56,7 +77,7 @@ class App extends Component {
 				<div id="inputs">
 					<div>{spans}</div>
 					<input onChange={this.handleInput}/>
-					<button>Guess</button>
+					<button onClick={this.handleButtonClick}>Guess</button>
 				</div>
 			</div>
     );
