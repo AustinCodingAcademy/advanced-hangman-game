@@ -27,10 +27,7 @@ class App extends Component {
 		//console.log(this.state.strikes);
 		let className = `strike-${this.state.strikes}`;
 		let spans = this.state.correctGuesses;
-		if (this.state.correctGuesses.indexOf("_ ") > -1){
-			//className = "gamewon";
-		}
-		else{
+		if (this.state.correctGuesses.indexOf("_ ") <= -1){
 			className = "gamewon";
 		}
 		if (this.state.strikes == 6){
