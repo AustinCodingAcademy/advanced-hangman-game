@@ -4,15 +4,19 @@ body {
   font-family: sans-serif;
 }
 
+span {
+  padding: 5px;
+}
+
 .hangman-sprites {
   position: relative;
   height: 200px;
   width: 110px;
-  margin: auto; 
+  margin: auto;
 }
 #inputs {
   position: absolute;
-  margin: auto; 
+  margin: auto;
   left:50%;
 }
 .hangman-sprites div {
@@ -23,7 +27,7 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
-    transition: opacity 1s; 
+    transition: opacity 1s;
 }
 .hangman-sprites .current {
   opacity: 1; }
