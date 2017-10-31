@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import state from "./state";
-import randomWords from 'random-words';
+
 
 class App extends Component {
 	constructor(props){
@@ -30,10 +30,6 @@ class App extends Component {
 		const guess = this.state.guess;
 		const word = this.state.wordToGuess;
 		console.log("guess: " + guess + " " + "Word To Guess: " + word);
-		if (guess){
-		const filtered =	word.filter(guess) 
-		console.log("filtered: " + filtered);
-			
 		}
 	}
 
