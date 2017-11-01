@@ -14,7 +14,7 @@ class App extends Component {
 			correctGuesses:[]
 		};
 	}
-
+	
 	correctGuess() {
 		let correct = [];
 		for (let i = 0; i < this.state.wordToGuess.length; i++) {
@@ -29,8 +29,13 @@ class App extends Component {
 	checkGuess(e){
 		const guess = this.state.guess;
 		let word = this.state.wordToGuess;
+		let currentStrikes = 0;
+
 		word = word.split("");
-		console.log(word);
+
+		if (word.indexOf(guess) == -1){
+			console.log("STRIKE")
+		}
 		let indexes = [], i = -1;
 		while ((i = word.indexOf(guess, i+1)) != -1){
 				indexes.push(i);
