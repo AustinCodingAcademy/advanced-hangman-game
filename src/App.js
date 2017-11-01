@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import state from "./state";
-
+import randomWords from 'random-words';
 
 class App extends Component {
 	constructor(props){
@@ -28,10 +28,16 @@ class App extends Component {
 	}
 	checkGuess(e){
 		const guess = this.state.guess;
-		const word = this.state.wordToGuess;
-		console.log("guess: " + guess + " " + "Word To Guess: " + word);
+		let word = this.state.wordToGuess;
+		word = word.split("");
+		console.log(word);
+		let indexes = [], i = -1;
+		while ((i = word.indexOf(guess, i+1)) != -1){
+				indexes.push(i);
 		}
+		console.log(indexes);
 	}
+	
 
 	componentDidMount(){
 		this.setState({
@@ -42,8 +48,8 @@ class App extends Component {
 
   render() {
 		
-		
-		
+	
+		console.log(this.state);
 		let className = `strike-${this.state.strikes}`;
 		let spans = [<span>_</span>];
     return (
