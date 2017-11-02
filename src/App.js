@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import state from "./state";
 import randomWords from 'random-words';
 
 class App extends Component {
@@ -14,7 +12,13 @@ class App extends Component {
 			correctGuesses:[]
 		};
 	}
-	
+
+	componentDidMount(){
+		this.setState({
+			correctGuesses: this.correctGuess()
+		})
+	}
+
 	correctGuess() {
 		let correct = [];
 		for (let i = 0; i < this.state.wordToGuess.length; i++) {
@@ -23,48 +27,90 @@ class App extends Component {
 		return correct;
 	}
 	
-	setGuess(e){
+	setGuessState(e){
 		this.setState({guess: e.target.value});
 	}
+
+	incrementStrike(){
+		let strikes = this.state.strikes;
+		strikes ++;
+		this.setState({
+			strikes: strikes
+		})
+	}
+
+	setCorrectGuessState(index){
+		let correctGuesses = this.state.correctGuesses;
+		let guess = this.state.guess;
+		let startValue = index;
+		let endValue = index;
+
+		endValue ++;
+		correctGuesses.fill(guess, startValue, endValue);
+		
+		this.setState({
+			correctGuesses: correctGuesses,
+			guess: ""
+		})
+	}
+
+
+
 	checkGuess(e){
 		const guess = this.state.guess;
 		let word = this.state.wordToGuess;
-		let currentStrikes = 0;
+		let strikes = this.state.strikes;
+		let indexes = [], i = -1;
 
 		word = word.split("");
 
 		if (word.indexOf(guess) == -1){
-			console.log("STRIKE")
+			this.incrementStrike();
 		}
-		let indexes = [], i = -1;
+
 		while ((i = word.indexOf(guess, i+1)) != -1){
 				indexes.push(i);
 		}
-		console.log(indexes);
-	}
-	
+		
 
-	componentDidMount(){
-		this.setState({
-			correctGuesses: this.correctGuess(),
-			
+		indexes.forEach((index) => {
+			this.setCorrectGuessState(index);
 		})
+		// for (let i = 0; i < indexes.length; i++){
+		// 	this.setCorrectGuessState([i]);
+		// }
+		
+		
+	}
+	spans(){
+		const correctGuesses = this.state.correctGuesses
+		let spans = []
+		correctGuesses.forEach((guess) => {
+			spans.push(<span> {guess} </span>);
+		})
+		return spans;
 	}
 
   render() {
-		
+	console.log(this.state);
+	let className = `strike-${this.state.strikes}`;
+	let correctGuesses = this.state.correctGuesses;
 	
-		console.log(this.state);
-		let className = `strike-${this.state.strikes}`;
-		let spans = [<span>_</span>];
+	if (correctGuesses.indexOf('_') === -1){
+		className = 'gamewon'
+	};
+	if (this.state.strikes >= 6){
+		className = 'gameover'
+	};
+	
     return (
 			<div>
 				<div  className="hangman-sprites">
 					<div className={`${className} current`} />
 				</div>
 				<div id="inputs">
-					<div>{spans}</div>
-					<input onChange={this.setGuess.bind(this)} />
+					<div>{this.spans()}</div>
+					<input maxlength="1" onChange={this.setGuessState.bind(this)} />
 					<button onClick={this.checkGuess.bind(this)}>Guess</button>
 				</div>
 			</div>
